@@ -1,22 +1,24 @@
-function [iMat,OptSumm] = OptDecision(iPlusNull)
-%Построение оптимального решения
-try
-    global InputMat;
-    %Построение матрицы, места с выделенным нулем заполняем значением
-    %исходной матрицы остальные устанавливаем в 0;
-    %OptSumm - значение целевой функции
-    OptSumm = 0;
-    for i = 1:length(iPlusNull)
-        for j = 1:length(iPlusNull)
-            if iPlusNull(j) == i
-                iMat(i,j) = InputMat(i,j);
-            else
-                iMat(i,j) = 0;
+function [iMat,OptSumm] = OptDecision(iPlusNull, InputMat)
+% РџРѕСЃС‚СЂРѕРµРЅРёРµ РѕРїС‚РёРјР°Р»СЊРЅРѕРіРѕ СЂРµС€РµРЅРёСЏ
+
+%      try
+%         global InputMat;
+        iMat = zeros(5,5);
+        %РџРѕСЃС‚СЂРѕРµРЅРёРµ РјР°С‚СЂРёС†С‹, РјРµСЃС‚Р° СЃ РІС‹РґРµР»РµРЅРЅС‹Рј РЅСѓР»РµРј Р·Р°РїРѕР»РЅСЏРµРј Р·РЅР°С‡РµРЅРёРµРј
+        %РёСЃС…РѕРґРЅРѕР№ РјР°С‚СЂРёС†С‹ РѕСЃС‚Р°Р»СЊРЅС‹Рµ СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РІ 0;
+        %OptSumm - Р·РЅР°С‡РµРЅРёРµ С†РµР»РµРІРѕР№ С„СѓРЅРєС†РёРё
+        OptSumm = 0;
+        for i = 1:5
+            for j = 1:5
+                if iPlusNull(j) == i
+                    iMat(i,j) = InputMat(i,j);
+                else
+                    iMat(i,j) = 0;
+                end
+                OptSumm = OptSumm + iMat(i,j);
             end
-            OptSumm = OptSumm + iMat(i,j);
         end
-    end
-catch
-    throw('Ошибка при построении оптимального решения\n');
-end
+%      catch
+%          throw('РћС€РёР±РєР° РїСЂРё РїРѕСЃС‚СЂРѕРµРЅРёРё РѕРїС‚РёРјР°Р»СЊРЅРѕРіРѕ СЂРµС€РµРЅРёСЏ\n');
+%      end
 end

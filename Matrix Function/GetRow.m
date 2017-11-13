@@ -1,14 +1,13 @@
 function [ArrRow] = GetRow(IRowNum,iMat)
-%Выдает из входной матрицы одномерный массив, из элементов строки заданного номера
-try
-    iSize = size(iMat,1);
-    ArrRow = zeros(1,iSize);
-    for j = 1:iSize
-        ArrRow(j) = iMat(IRowNum,j);
-    end
-catch
-   fprintf('Ошибка при преобразовании %.1d строки в одномерный массив\n',IRowNum); 
-end
+%Р’С‹РґР°РµС‚ РёР· РІС…РѕРґРЅРѕР№ РјР°С‚СЂРёС†С‹ РѕРґРЅРѕРјРµСЂРЅС‹Р№ РјР°СЃСЃРёРІ, РёР· СЌР»РµРјРµРЅС‚РѕРІ СЃС‚СЂРѕРєРё Р·Р°РґР°РЅРЅРѕРіРѕ РЅРѕРјРµСЂР°
 
+%     try
+        iSize = size(iMat,1);
+        ArrRow = zeros(1,iSize);
+        for j = 1:iSize
+            ArrRow(j) = iMat(IRowNum,j);
+        end
+%     catch
+%        fprintf('РћС€РёР±РєР° РїСЂРё РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРё %.1d СЃС‚СЂРѕРєРё РІ РѕРґРЅРѕРјРµСЂРЅС‹Р№ РјР°СЃСЃРёРІ\n',IRowNum); 
+%     end
 end
-

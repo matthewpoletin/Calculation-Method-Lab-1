@@ -1,13 +1,14 @@
 function [iMax] = FindMax(iArr)
-%Нахождение максимального числа. На вход принимается массив
-try
-iMax = iArr(1);
-    for i = 1:length(iArr)
-        if iArr(i)>iMax
-            iMax = iArr(i); 
+%РќР°С…РѕР¶РґРµРЅРёРµ РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ С‡РёСЃР»Р°. РќР° РІС…РѕРґ РїСЂРёРЅРёРјР°РµС‚СЃСЏ РјР°СЃСЃРёРІ
+
+%     try
+        iMax = iArr(1);
+        for i = 1:length(iArr)
+            if iArr(i)>iMax
+                iMax = iArr(i); 
+            end
         end
-    end
-catch
-    fprintf('Ошибка при поиске максимума\n');
-end
+%     catch
+%         fprintf('РћС€РёР±РєР° РїСЂРё РїРѕРёСЃРєРµ РјР°РєСЃРёРјСѓРјР°\n');
+%     end
 end

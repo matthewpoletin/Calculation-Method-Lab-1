@@ -1,88 +1,106 @@
-function [iMat] = GeneralStage(iMatSize,iMat)
-%Основной этап. На вход подается порядок матрицы и сама матрица
-%PlusItemsCol - массив, соответствующий выделенным столбца. Если элемент =
-%-1, то столбец не выделен, иначе хранит строку выделенного 0*;
-%iPlusNull - размер СНН;
-%arrComRow - массив выделенных строк. 0 - строка не выделена,1 - выделена;
-%iComRow - стэк с i индексом 0';
-%iComCol - стэк с j индексом 0';
-%iterCount - счетчик итераций;
-%bHasUnmarkedNull - True:среди невыделенных есть 0/False:нет;
-%bHasMarkedNullInRow - True:в выделенной строке есть 0*/False:нет;
+function [iMat] = GeneralStage(iMatSize,iMat,InputMat)
+% РћСЃРЅРѕРІРЅРѕР№ СЌС‚Р°Рї. РќР° РІС…РѕРґ РїРѕРґР°РµС‚СЃСЏ РїРѕСЂСЏРґРѕРє РјР°С‚СЂРёС†С‹ Рё СЃР°РјР° РјР°С‚СЂРёС†Р°
+% PlusItemsCol - РјР°СЃСЃРёРІ, СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ РІС‹РґРµР»РµРЅРЅС‹Рј СЃС‚РѕР»Р±С†Р°. Р•СЃР»Рё СЌР»РµРјРµРЅС‚ =
+% -1, С‚Рѕ СЃС‚РѕР»Р±РµС† РЅРµ РІС‹РґРµР»РµРЅ, РёРЅР°С‡Рµ С…СЂР°РЅРёС‚ СЃС‚СЂРѕРєСѓ РІС‹РґРµР»РµРЅРЅРѕРіРѕ 0*;
+% iPlusNull - СЂР°Р·РјРµСЂ РЎРќРќ;
+% arrComRow - РјР°СЃСЃРёРІ РІС‹РґРµР»РµРЅРЅС‹С… СЃС‚СЂРѕРє. 0 - СЃС‚СЂРѕРєР° РЅРµ РІС‹РґРµР»РµРЅР°,1 - РІС‹РґРµР»РµРЅР°;
+% iComRow - СЃС‚СЌРє СЃ i РёРЅРґРµРєСЃРѕРј 0';
+% iComCol - СЃС‚СЌРє СЃ j РёРЅРґРµРєСЃРѕРј 0';
+% iterCount - СЃС‡РµС‚С‡РёРє РёС‚РµСЂР°С†РёР№;
+% bHasUnmarkedNull - True:СЃСЂРµРґРё РЅРµРІС‹РґРµР»РµРЅРЅС‹С… РµСЃС‚СЊ 0/False:РЅРµС‚;
+% bHasMarkedNullInRow - True:РІ РІС‹РґРµР»РµРЅРЅРѕР№ СЃС‚СЂРѕРєРµ РµСЃС‚СЊ 0*/False:РЅРµС‚;
 
-try
-    global bDeb;
-    global InputMat;
-    if bDeb
-        cprintf('*blue', 'Основной этап:\n');
-    end
-    %Построение первоночальной СНН
-    [PlusItemsCol,iPlusNull] = GetNullIndx(iMatSize,iMat);
-    if bDeb
-        FirstShowCINMatrix(iPlusNull,PlusItemsCol,iMat);
-    end
-    %в iComRow,iComCol - стэк для индексов элементов со штрихом
-    iComRow = [];
-    iComCol = [];
-    arrComRow = zeros(1,iMatSize); 
-    %выполняем цикл, пока количество выделенных нулей не станет равнм
-    %размерности матрицы
-    iterCount = 1;
-    
-    %Размер СНН равен размерности матрицы?
-    while iPlusNull < iMatSize       
-        %Среди невыделенных элементов есть 0?
-        [bHasUnmarkedNull,iComRow,iComCol] = CheckUnmarkedNull(PlusItemsCol,iMat,arrComRow,iComRow,iComCol);              
-        %Да, среди невыделенных элементов есть 0
-        if bHasUnmarkedNull
-            if bDeb
-                ShowComMatrix(PlusItemsCol,iMat,iterCount,iComRow,iComCol);
-            end
-            %В одной строке с 0' есть 0*?
-            [bHasMarkedNullInRow] = FindMarkedNullInRow(PlusItemsCol,iComRow);
-            %Да, в строке с 0' есть 0*
-            if bHasMarkedNullInRow
-                %Удаление выделения со столбца. Выделение строки              
-                [PlusItemsCol,arrComRow] = ChangeMarks(PlusItemsCol,iComCol,iComRow,arrComRow);
+%     try
+        global bDeb;
+%         global InputMat;
+        if bDeb
+            fprintf('РћСЃРЅРѕРІРЅРѕР№ СЌС‚Р°Рї:\n');
+        end
+        % РџРѕСЃС‚СЂРѕРµРЅРёРµ РїРµСЂРІРѕРЅРѕС‡Р°Р»СЊРЅРѕР№ РЎРќРќ
+        [PlusItemsCol,iPlusNull] = GetNullIndex(iMatSize,iMat);
+        iterCount = 1;
+        op = iPlusNull;
+        fprintf('\nРќРѕРјРµСЂ РёС‚РµСЂР°С†РёРё: %.1d\n',iterCount);
+        iterCount = iterCount + 1;
+        if bDeb
+            FirstShowCINMatrix(iPlusNull,PlusItemsCol,iMat);
+        end
+        % РІ iComRow,iComCol - СЃС‚СЌРє РґР»СЏ РёРЅРґРµРєСЃРѕРІ СЌР»РµРјРµРЅС‚РѕРІ СЃРѕ С€С‚СЂРёС…РѕРј
+        iComRow = [];
+        iComCol = [];
+        arrComRow = zeros(1,iMatSize); 
+        % РІС‹РїРѕР»РЅСЏРµРј С†РёРєР», РїРѕРєР° РєРѕР»РёС‡РµСЃС‚РІРѕ РІС‹РґРµР»РµРЅРЅС‹С… РЅСѓР»РµР№ РЅРµ СЃС‚Р°РЅРµС‚ СЂР°РІРЅС‹Рј
+        % СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё РјР°С‚СЂРёС†С‹
+        % Р Р°Р·РјРµСЂ РЎРќРќ СЂР°РІРµРЅ СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё РјР°С‚СЂРёС†С‹?
+        while iPlusNull < iMatSize
+            % РЎСЂРµРґРё РЅРµРІС‹РґРµР»РµРЅРЅС‹С… СЌР»РµРјРµРЅС‚РѕРІ РµСЃС‚СЊ 0?
+            [bHasUnmarkedNull, iComRow, iComCol] = CheckUnmarkedNull(PlusItemsCol,iMat,arrComRow,iComRow,iComCol);
+            % Р”Р°, СЃСЂРµРґРё РЅРµРІС‹РґРµР»РµРЅРЅС‹С… СЌР»РµРјРµРЅС‚РѕРІ РµСЃС‚СЊ 0
+            if bHasUnmarkedNull
                 if bDeb
-                    fprintf('\nВ строке с красным нулем есть выделенный ноль\n');
-                    ShowCINMatrix(PlusItemsCol,arrComRow,iMat,iComRow,iComCol);
-                end 
-            %Нет, в строке с 0' нет 0*
-            else
-                %Снятие выделения со строк, новое выделение столбцов
-                [PlusItemsCol,arrComRow,iComCol,iComRow]=CreateNewCIN(PlusItemsCol,arrComRow,iComCol,iComRow);
+                    ShowComMatrix(PlusItemsCol, iMat, iterCount, iComRow, iComCol);
+                end
+                % Р’ РѕРґРЅРѕР№ СЃС‚СЂРѕРєРµ СЃ 0' РµСЃС‚СЊ 0*?
+                [bHasMarkedNullInRow] = FindMarkedNullInRow(PlusItemsCol,iComRow);
+                % Р”Р°, РІ СЃС‚СЂРѕРєРµ СЃ 0' РµСЃС‚СЊ 0*
+                if bHasMarkedNullInRow
+                    % РЈРґР°Р»РµРЅРёРµ РІС‹РґРµР»РµРЅРёСЏ СЃРѕ СЃС‚РѕР»Р±С†Р°. Р’С‹РґРµР»РµРЅРёРµ СЃС‚СЂРѕРєРё              
+                    [PlusItemsCol, arrComRow] = ChangeMarks(PlusItemsCol,iComCol,iComRow,arrComRow);
+                    if bDeb
+                        fprintf('\nР’ СЃС‚СЂРѕРєРµ СЃ 0 СЃРѕ '' РµСЃС‚СЊ РІС‹РґРµР»РµРЅРЅС‹Р№ РЅРѕР»СЊ\n');
+                        ShowCINMatrix(PlusItemsCol,arrComRow,iMat,iComRow,iComCol);
+                    end
+                    
+                    % Р’С‹РІРѕРґ Р·РЅР°С‡РµРЅРёР№ L С†РµРїРѕС‡РєРё
+                    for i = 1:length(iComRow)
+                        fprintf('(%.1d;%.1d)\n',iComRow(i),iComCol(i));
+                    end         
+                    
+                % РќРµС‚, РІ СЃС‚СЂРѕРєРµ СЃ 0' РЅРµС‚ 0*
+                else
+                    % РЎРЅСЏС‚РёРµ РІС‹РґРµР»РµРЅРёСЏ СЃРѕ СЃС‚СЂРѕРє, РЅРѕРІРѕРµ РІС‹РґРµР»РµРЅРёРµ СЃС‚РѕР»Р±С†РѕРІ
+                    [PlusItemsCol, arrComRow, iComCol, iComRow] = CreateNewCIN(PlusItemsCol,arrComRow,iComCol,iComRow, iMat);
+                    if bDeb
+                        fprintf('\nР’ СЃС‚СЂРѕРєРµ СЃ 0 СЃРѕ '' РЅРµС‚ РІС‹РґРµР»РµРЅРЅРѕРіРѕ РЅРѕР»СЏ\n');
+                        FirstShowCINMatrix(iPlusNull,PlusItemsCol,iMat);
+                    end
+                end
+            % РќРµС‚, СЃСЂРµРґРё РЅРµРІС‹РґРµР»РµРЅРЅС‹С… СЌР»РµРјРµРЅС‚РѕРІ РЅРµС‚ 0.
+            else 
+                iMat = UpgradeMatrix(iMat, PlusItemsCol, arrComRow);
                 if bDeb
-                    fprintf('\nВ строке с красным нулем нет выделенного ноля\n');
-                    FirstShowCINMatrix(iPlusNull,PlusItemsCol,iMat);
+                    fprintf('\nРЎСЂРµРґРё РЅРµРІС‹РґРµР»РµРЅРЅС‹С… СЌР»РµРјРµРЅС‚РѕРІ РЅРµС‚ РЅСѓР»СЏ. РЈР»СѓС‡С€Р°РµРј РјР°С‚СЂРёС†Сѓ\n');
+                    ShowCINMatrix(PlusItemsCol, arrComRow, iMat, iComRow, iComCol);
                 end
             end
-        %Нет, среди невыделенных элементов нет 0.
-        else 
-            iMat = UpgradeMatrix(iMat,PlusItemsCol,arrComRow);
+            % РџРѕРґСЃС‡РµС‚ СЌР»РµРјРµРЅС‚РѕРІ РЎРќРќ
+            if iPlusNull > op
+                if bDeb
+                    for i = 1:40
+                        fprintf('-');
+                    end
+                    fprintf('\n');
+                    fprintf('\nРќРѕРјРµСЂ РёС‚РµСЂР°С†РёРё: %.1d\n',iterCount);
+                end
+                iterCount = iterCount + 1;
+                op = iPlusNull;
+            end
+            % РџРѕРґСЃС‡РµС‚ СЌР»РµРјРµРЅС‚РѕРІ РЎРќРќ
+            iPlusNull = 0;
+            for i = 1:length(PlusItemsCol)
+                if PlusItemsCol(i) ~= -1
+                    iPlusNull = iPlusNull + 1;
+                end
+            end
+            iPlusNull = iPlusNull + length(iComCol);
             if bDeb
-                fprintf('\nСреди невыделенных элементов нет нуля. Улучшаем матрицу\n');
-                ShowCINMatrix(PlusItemsCol,arrComRow,iMat,iComRow,iComCol);
+                fprintf('\nРљРѕР»РёС‡РµСЃС‚РІРѕ РЅСѓР»РµРІС‹С… СЌР»РµРјРµРЅС‚РѕРІ: %.1d\n',iPlusNull);
             end
         end
-        %Подсчет элементов СНН
-        iPlusNull = 0;
-        for i=1:length(PlusItemsCol)
-            if PlusItemsCol(i)~=-1
-                iPlusNull = iPlusNull + 1;
-            end
-        end
-        iPlusNull = iPlusNull + length(iComCol);
-        if bDeb
-            fprintf('\nКоличество нулевых элементов: %.1d\n',iPlusNull);
-        end
-        iterCount = iterCount + 1;
-    end        
-    
-    %Вычисление оптимального решения
-    [iMat,OptSumm] = OptDecision(PlusItemsCol);
-    ShowOptDecision(iMat,OptSumm,PlusItemsCol);
-catch
-   fprintf('Ошибка в основном этапе алгоритма\n'); 
-end
+        % Р’С‹С‡РёСЃР»РµРЅРёРµ РѕРїС‚РёРјР°Р»СЊРЅРѕРіРѕ СЂРµС€РµРЅРёСЏ
+        [iMat,OptSumm] = OptDecision(PlusItemsCol, InputMat);
+        ShowOptDecision(iMat, OptSumm, PlusItemsCol);
+%     catch
+%        fprintf('РћС€РёР±РєР° РІ РѕСЃРЅРѕРІРЅРѕРј СЌС‚Р°РїРµ Р°Р»РіРѕСЂРёС‚РјР°\n'); 
+%     end
 end

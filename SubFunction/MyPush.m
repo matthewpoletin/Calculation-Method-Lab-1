@@ -1,4 +1,5 @@
 function [Arr]=MyPush(Arr,iInput)
-%Запись в стэк
+%Р—Р°РїРёСЃСЊ РІ СЃС‚СЌРє
+
     Arr = [Arr iInput];
 end

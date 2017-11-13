@@ -1,47 +1,41 @@
 function ShowComMatrix(PlusItemsCol,iMat,iterCount,iComRow,iComCol)
-%Вывод СНН на экран (для наглядности выбора)
-%try
-for i = 1:40
-    fprintf('-');
-end
-fprintf('\nНомер итерации: %.1d\n',iterCount);
-fprintf('Невыделенный нулевой элемент [%.1d;%.1d] выделен красным:\n',iComCol(length(iComCol)),iComRow(length(iComRow)));
-    %вывод "+" над столбцами
-fprintf('   ');
-    for i = 1:length(PlusItemsCol)
-        if PlusItemsCol(i) ~= -1
-            fprintf('+');
-        else
-            fprintf(' ');
-        end
+%Р’С‹РІРѕРґ РЎРќРќ РЅР° СЌРєСЂР°РЅ (РґР»СЏ РЅР°РіР»СЏРґРЅРѕСЃС‚Рё РІС‹Р±РѕСЂР°)
+
+%     try
+        fprintf('РќРµРІС‹РґРµР»РµРЅРЅС‹Р№ РЅСѓР»РµРІРѕР№ СЌР»РµРјРµРЅС‚ [%.1d;%.1d] РІС‹РґРµР»РµРЅ '':\n',iComCol(length(iComCol)),iComRow(length(iComRow)));
+        %РІС‹РІРѕРґ "+" РЅР°Рґ СЃС‚РѕР»Р±С†Р°РјРё
         fprintf('   ');
-    end 
-    fprintf('\n');
-%Вывод матрицы с обозначением невыделенного элемента
-    for i = 1:length(PlusItemsCol)
-        fprintf('   ');
-        for j = 1:length(PlusItemsCol)
-            bRed = false;
-            for c = 1:length(iComCol)
-                if iComCol(c) == j && iComRow(c) == i
-                    bRed = true;
-                end
-                
+        for i = 1:length(PlusItemsCol)
+            if PlusItemsCol(i) ~= -1
+                fprintf('+');
+            else
+                fprintf(' ');
             end
-             if bRed
-                cprintf('*red','%.1d   ',iMat(i,j));
-             elseif PlusItemsCol(j) == i
-                cprintf('*blue','%.1d   ',iMat(i,j));
-             else
-                fprintf('%.1d   ',iMat(i,j));
-             end
+            fprintf('   ');
         end 
         fprintf('\n');
-    end
-        fprintf('Строку %.1d пометим "+", уберем выделение со столбца,  в котором находится синий ноль %.1d:\n',iComRow(length(iComRow))); 
+        % Р’С‹РІРѕРґ РјР°С‚СЂРёС†С‹ СЃ РѕР±РѕР·РЅР°С‡РµРЅРёРµРј РЅРµРІС‹РґРµР»РµРЅРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
+        for i = 1:length(PlusItemsCol)
+            fprintf('   ');
+            for j = 1:length(PlusItemsCol)
+                bRed = false;
+                for c = 1:length(iComCol)
+                    if iComCol(c) == j && iComRow(c) == i
+                        bRed = true;
+                    end    
+                end
+                if bRed
+                    cprintf('*red','%.1d   ',iMat(i,j));
+                elseif PlusItemsCol(j) == i
+                    cprintf('*blue','%.1d   ',iMat(i,j));
+                else
+                    fprintf('%.1d   ',iMat(i,j));
+                end
+            end
+            fprintf('\n');
+        end
+            fprintf('РЎС‚СЂРѕРєСѓ %.1d РїРѕРјРµС‚РёРј "+", СѓР±РµСЂРµРј РІС‹РґРµР»РµРЅРёРµ СЃРѕ СЃС‚РѕР»Р±С†Р°, РІ РєРѕС‚РѕСЂРѕРј РЅР°С…РѕРґРёС‚СЃСЏ 0 co *%.1d:\n',iComRow(length(iComRow))); 
+%     catch
+%        fprintf('РћС€РёР±РєР° РїСЂРё РїСЂРѕСЃС‚СЂРѕРµРЅРёРё РЎРќРќ\n');
+%     end
 end
-%catch
-%    fprintf('Ошибка при простроении СНН\n');
-%end
-
-

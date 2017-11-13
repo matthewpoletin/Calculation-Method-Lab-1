@@ -1,37 +1,35 @@
 function [PlusItems,iComRow,iComCol] = ChangePlus(PlusItems,iComRow,iComCol,arrComRow,iMat)
-%Âûäåëåíèå "+" ñòðîêè ñ 0', ñíÿòèå "+" ñî ñòîëáöà ñ 0*
-bNullInRow = true;
-%Ïîèñê âûäåëåííîãî ýëåìåíòà â ñòðî÷êå ñ 0'
-while bNullInRow
-    bNullInRow = false;
-for j = 1:length(PlusItems) 
-    if PlusItems(j) == iComRow(length(iComRow))
-        %Ñíÿòèå âûäåëåíèÿ ñî ñòîëáöà
-        PlusItems(j) = -1;
-        n = j;
-        %Âûäåëåíèå ñòðîêè ñ 0'
-        arrComRow(iComRow(length(iComRow))) = 1;
-        bNullInRow = true;
-    end
-end
-if bNullInRow
-    
-for i = 1:length(PlusItems)
-    if iMat(i,n) == 0 && arrComRow(i) == 0
-        iComCol = MyPush(iComCol,i);
-        iComRow = MyPush(iComRow,n);
-        
-    end
-end
-end
-end
-if bNullInRow == false
-    while length(iComCol)>0 && length(iComRow)>0
-        [iComCol,iNewNullCol] = MyPop(iComCol);
-        [iComRow,iNewNullRow] = MyPop(iComRow);
-        PlusItems(iNewNullCol) = iNewNullRow;
-    end
-    arrComRow = zeros(1,length(PlusItems));
-end  
-end 
+%Ð’Ñ‹Ð´ÐµÐ»ÐµÐ½Ð¸Ðµ "+" ÑÑ‚Ñ€Ð¾ÐºÐ¸ Ñ 0', ÑÐ½ÑÑ‚Ð¸Ðµ "+" ÑÐ¾ ÑÑ‚Ð¾Ð»Ð±Ñ†Ð° Ñ 0*
 
+    bNullInRow = true;
+    %ÐŸÐ¾Ð¸ÑÐº Ð²Ñ‹Ð´ÐµÐ»ÐµÐ½Ð½Ð¾Ð³Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð° Ð² ÑÑ‚Ñ€Ð¾Ñ‡ÐºÐµ Ñ 0'
+    while bNullInRow
+        bNullInRow = false;
+        for j = 1:length(PlusItems) 
+            if PlusItems(j) == iComRow(length(iComRow))
+                %Ð¡Ð½ÑÑ‚Ð¸Ðµ Ð²Ñ‹Ð´ÐµÐ»ÐµÐ½Ð¸Ñ ÑÐ¾ ÑÑ‚Ð¾Ð»Ð±Ñ†Ð°
+                PlusItems(j) = -1;
+                n = j;
+                %Ð’Ñ‹Ð´ÐµÐ»ÐµÐ½Ð¸Ðµ ÑÑ‚Ñ€Ð¾ÐºÐ¸ Ñ 0'
+                arrComRow(iComRow(length(iComRow))) = 1;
+                bNullInRow = true;
+            end
+        end
+        if bNullInRow
+            for i = 1:length(PlusItems)
+                if iMat(i,n) == 0 && arrComRow(i) == 0
+                    iComCol = MyPush(iComCol,i);
+                    iComRow = MyPush(iComRow,n);
+                end
+            end
+        end
+    end
+    if bNullInRow == false
+        while length(iComCol)>0 && length(iComRow)>0
+            [iComCol,iNewNullCol] = MyPop(iComCol);
+            [iComRow,iNewNullRow] = MyPop(iComRow);
+            PlusItems(iNewNullCol) = iNewNullRow;
+        end
+        arrComRow = zeros(1,length(PlusItems));
+    end  
+end

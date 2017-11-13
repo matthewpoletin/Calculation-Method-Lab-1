@@ -1,15 +1,16 @@
 function [PlusItems,arrComRow] = ChangeMarks(PlusItems,iComCol,iComRow,arrComRow)
-%Снятие "+" со столбца, выставление "+" на строки
-    try
-        %Снятие выделение со столбца
+%РЎРЅСЏС‚РёРµ "+" СЃРѕ СЃС‚РѕР»Р±С†Р°, РІС‹СЃС‚Р°РІР»РµРЅРёРµ "+" РЅР° СЃС‚СЂРѕРєРё
+
+%     try
+        %РЎРЅСЏС‚РёРµ РІС‹РґРµР»РµРЅРёРµ СЃРѕ СЃС‚РѕР»Р±С†Р°
         for i=1:length(PlusItems)
-            if PlusItems(i) == iComRow(length(iComRow));
+            if PlusItems(i) == iComRow(length(iComRow))
                 PlusItems(i) = -1;
             end
         end
-        %Выделение строки
+        %Р’С‹РґРµР»РµРЅРёРµ СЃС‚СЂРѕРєРё
         arrComRow(iComRow(length(iComRow))) = 1;
-    catch
-        throw('Ошибка при снятии выделения со столбца/выделении строки\n');
-    end
+%     catch
+%         throw('РћС€РёР±РєР° РїСЂРё СЃРЅСЏС‚РёРё РІС‹РґРµР»РµРЅРёСЏ СЃРѕ СЃС‚РѕР»Р±С†Р°/РІС‹РґРµР»РµРЅРёРё СЃС‚СЂРѕРєРё\n');
+%     end
 end

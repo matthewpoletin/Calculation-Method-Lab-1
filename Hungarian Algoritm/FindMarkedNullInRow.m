@@ -1,13 +1,14 @@
 function [NullInRow] = FindMarkedNullInRow(PlusItems,iComRow)
-%Поиск 0* в строке с 0'. Возвращается True/False. 
-    try
+%РџРѕРёСЃРє 0* РІ СЃС‚СЂРѕРєРµ СЃ 0'. Р’РѕР·РІСЂР°С‰Р°РµС‚СЃСЏ True/False. 
+
+%     try
         NullInRow = false;
         for i = 1:length(PlusItems)
             if PlusItems(i) == iComRow(length(iComRow))
                 NullInRow = true;
             end
         end
-    catch
-        throw('Ошибка при поиске 0* в строке\n');
-    end
+%     catch
+%         throw('РћС€РёР±РєР° РїСЂРё РїРѕРёСЃРєРµ 0* РІ СЃС‚СЂРѕРєРµ\n');
+%     end
 end

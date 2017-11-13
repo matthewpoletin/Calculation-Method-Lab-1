@@ -1,30 +1,33 @@
-function [PlusItemsCol,PlusItemsRow,Col,Row] = CreateNewCIN(PlusItemsCol,PlusItemsRow,ComCol,ComRow)
-%Снятие выделения с 0*. Замена выделения 0' -> 0*. Снятие выделения со
-%строк. Новой выделение столбцов
-%Выделение столбцов с новыми 0*
-    try
-        while length(ComCol)>0 && length(ComRow)>0
+function [PlusItemsCol,PlusItemsRow,Col,Row] = CreateNewCIN(PlusItemsCol, PlusItemsRow, ComCol, ComRow, iMat)
+%РЎРЅСЏС‚РёРµ РІС‹РґРµР»РµРЅРёСЏ СЃ 0*. Р—Р°РјРµРЅР° РІС‹РґРµР»РµРЅРёСЏ 0' -> 0*. РЎРЅСЏС‚РёРµ РІС‹РґРµР»РµРЅРёСЏ СЃРѕ
+%СЃС‚СЂРѕРє. РќРѕРІРѕР№ РІС‹РґРµР»РµРЅРёРµ СЃС‚РѕР»Р±С†РѕРІ
+%Р’С‹РґРµР»РµРЅРёРµ СЃС‚РѕР»Р±С†РѕРІ СЃ РЅРѕРІС‹РјРё 0*
+
+%     try
+        fprintf('\nРџРѕСЃС‚СЂРѕРµРЅРёРµ L С†РµРїРѕС‡РєРё:');
+        while length(ComCol) > 0 && length(ComRow) > 0
             NewCol = ComCol(length(ComCol));
             NewRow = ComRow(length(ComRow));
             if length(ComCol) > 1 && length(ComRow) > 1
-                    ComCol = [];
-                    ComRow = [];
+                ComCol = [];
+                ComRow = [];
                 for i = 1:(length(ComCol)-1)
-                    ComCol(i)=Col(i);
-                    ComRow(i)=Row(i);
+                    ComCol(i) = Col(i);
+                    ComRow(i) = Row(i);
                 end
             else
                 ComCol = [];
                 ComRow = [];
             end
-        %     [ComCol,NewCol] = MyPop(ComCol);
-        %     [ComRow,NewRow] = MyPop(ComRow);
-            Col = [];Row=[];
+%             [ComCol,NewCol] = MyPop(ComCol);
+%             [ComRow,NewRow] = MyPop(ComRow);
+            Col = [];
+            Row = [];
             PlusItemsCol(NewCol) = NewRow;
         end
-        %Снятие выделения со строк
+        %РЎРЅСЏС‚РёРµ РІС‹РґРµР»РµРЅРёСЏ СЃРѕ СЃС‚СЂРѕРє
         PlusItemsRow = zeros(1,length(PlusItemsCol));
-    catch
-        throw('Ошибка при прохождении L цепочки\n');
-    end
+%     catch
+%         throw('РћС€РёР±РєР° РїСЂРё РїСЂРѕС…РѕР¶РґРµРЅРёРё L С†РµРїРѕС‡РєРё\n');
+%     end
 end

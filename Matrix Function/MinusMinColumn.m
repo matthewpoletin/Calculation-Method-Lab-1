@@ -1,14 +1,15 @@
 function [iMat] = MinusMinColumn(IMatSize,iMat)
-%Вычитание минимального в каждом столбце
-%try
-    for j = 1:IMatSize
-        arrCol = GetColumn(j,iMat); %arrCol - текущий столбец
-        ColMin = FindMin(arrCol); %ColMax - минимальный элемент в столбце
-        for i = 1:IMatSize
-            iMat(i,j) = iMat(i,j)- ColMin;
-        end
-    end
-% catch
-%     fprintf('Ошибка при вычитании максимального элемента в  %.1d столбце\n',j);
-end
+%Р’С‹С‡РёС‚Р°РЅРёРµ РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ РІ РєР°Р¶РґРѕРј СЃС‚РѕР»Р±С†Рµ
 
+%     try
+        for j = 1:IMatSize
+            arrCol = GetColumn(j,iMat); %arrCol - С‚РµРєСѓС‰РёР№ СЃС‚РѕР»Р±РµС†
+            ColMin = FindMin(arrCol); %ColMax - РјРёРЅРёРјР°Р»СЊРЅС‹Р№ СЌР»РµРјРµРЅС‚ РІ СЃС‚РѕР»Р±С†Рµ
+            for i = 1:IMatSize
+                iMat(i,j) = iMat(i,j)- ColMin;
+            end
+        end
+%     catch
+%         fprintf('РћС€РёР±РєР° РїСЂРё РІС‹С‡РёС‚Р°РЅРёРё РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РІ  %.1d СЃС‚РѕР»Р±С†Рµ\n',j);
+%     end
+end

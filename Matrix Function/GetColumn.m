@@ -1,14 +1,13 @@
 function [ArrCol] = GetColumn(IColNum,iMat)
-%Выдает из входной матрицы одномерный массив, из элементов столбца заданного номера
-try
-    iSize = size(iMat,1);
-    ArrCol = zeros(1,iSize);
-    for i = 1:iSize
-        ArrCol(i) = iMat(i,IColNum);
-    end
-catch
-   fprintf('Ошибка при преобразовании %.1d столбца в одномерный массив\n',IColNum); 
-end
+%Р’С‹РґР°РµС‚ РёР· РІС…РѕРґРЅРѕР№ РјР°С‚СЂРёС†С‹ РѕРґРЅРѕРјРµСЂРЅС‹Р№ РјР°СЃСЃРёРІ, РёР· СЌР»РµРјРµРЅС‚РѕРІ СЃС‚РѕР»Р±С†Р° Р·Р°РґР°РЅРЅРѕРіРѕ РЅРѕРјРµСЂР°
 
+%     try
+        iSize = size(iMat,1);
+        ArrCol = zeros(1,iSize);
+        for i = 1:iSize
+            ArrCol(i) = iMat(i,IColNum);
+        end
+%     catch
+%        fprintf('РћС€РёР±РєР° РїСЂРё РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРё %.1d СЃС‚РѕР»Р±С†Р° РІ РѕРґРЅРѕРјРµСЂРЅС‹Р№ РјР°СЃСЃРёРІ\n',IColNum); 
+%     end
 end
-

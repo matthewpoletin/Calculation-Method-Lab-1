@@ -1,14 +1,15 @@
 function [iMat] = MinusMinRow(IMatSize,iMat)
-%Вычитание минимального элемента строки из каждого элемента строки
-try
-    for i = 1:IMatSize
-        arrRow = GetRow(i,iMat); %arrRow - массив текущей строки
-        RowMin = FindMin(arrRow); %RowMin - минимальный элемент в строке
-        for j = 1:IMatSize
-            iMat(i,j) = iMat(i,j)- RowMin;
-        end
-    end
-catch
-    fprintf('Ошибка при вычитании минимального элемента в  %.1d строке\n',i);
-end
+%Р’С‹С‡РёС‚Р°РЅРёРµ РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р° СЃС‚СЂРѕРєРё РёР· РєР°Р¶РґРѕРіРѕ СЌР»РµРјРµРЅС‚Р° СЃС‚СЂРѕРєРё
 
+%     try
+        for i = 1:IMatSize
+            arrRow = GetRow(i,iMat); %arrRow - РјР°СЃСЃРёРІ С‚РµРєСѓС‰РµР№ СЃС‚СЂРѕРєРё
+            RowMin = FindMin(arrRow); %RowMin - РјРёРЅРёРјР°Р»СЊРЅС‹Р№ СЌР»РµРјРµРЅС‚ РІ СЃС‚СЂРѕРєРµ
+            for j = 1:IMatSize
+                iMat(i,j) = iMat(i,j)- RowMin;
+            end
+        end
+%     catch
+%         fprintf('РћС€РёР±РєР° РїСЂРё РІС‹С‡РёС‚Р°РЅРёРё РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РІ  %.1d СЃС‚СЂРѕРєРµ\n',i);
+%     end
+end

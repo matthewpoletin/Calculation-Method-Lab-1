@@ -1,15 +1,16 @@
-function [Max] = GetMax(iMatSize,iMat);
-%Нахождение максимального элемента в матрице
-    try
+function [Max] = GetMax(iMatSize, iMat)
+%РќР°С…РѕР¶РґРµРЅРёРµ РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РІ РјР°С‚СЂРёС†Рµ
+
+%     try
         Max = iMat(1,1);
         for i = 1:iMatSize
             for j = 1:iMatSize
                 if iMat(i,j) > Max
-                    Max = iMat(i,j)
+                    Max = iMat(i,j);
                 end
             end
         end
-    catch
-        throw('Ошибка при нахождении максимального элемента матрицы\n');
-    end
+%     catch
+%         throw('РћС€РёР±РєР° РїСЂРё РЅР°С…РѕР¶РґРµРЅРёРё РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РјР°С‚СЂРёС†С‹\n');
+%     end
 end

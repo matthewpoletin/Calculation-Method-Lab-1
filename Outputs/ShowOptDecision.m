@@ -1,14 +1,15 @@
-function ShowOptDecision(iMat,Sum,iNull)
-%Вывод оптимального решения
-    cprintf('*blue', 'Оптимальное решение:\n');
+function ShowOptDecision(iMat, Sum, iNull)
+% Р’С‹РІРѕРґ РѕРїС‚РёРјР°Р»СЊРЅРѕРіРѕ СЂРµС€РµРЅРёСЏ
+
+%     cprintf('*blue', 'РћРїС‚РёРјР°Р»СЊРЅРѕРµ СЂРµС€РµРЅРёРµ:\n');
+    fprintf('РћРїС‚РёРјР°Р»СЊРЅРѕРµ СЂРµС€РµРЅРёРµ:\n');
     disp(iMat);
-    cprintf('*blue','Значание целевой функции:');
+    fprintf('Р—РЅР°С‡Р°РЅРёРµ С†РµР»РµРІРѕР№ С„СѓРЅРєС†РёРё:');
     for j = 1:length(iNull)
-        cprintf('*blue',' %.1d',iMat(iNull(j),j));
+        fprintf(' %.1d', iMat(iNull(j),j));
         if j ~= length(iNull)
-             cprintf('*blue',' +');
+             fprintf(' +');
         end
     end
-    cprintf('*blue', ' = %.1d\n',Sum);
+    fprintf(' = %.1d\n', Sum);
 end
-
